@@ -5,27 +5,18 @@
 //
 
 #include <stdio.h>
-
-// define binary number
-int bin[4] = {1, 1, 1, 1};
-
-// counts current index in the array
-unsigned int binNum;
-
-// counts length of array
-unsigned int binL;
-
-// decimal number
-int decNum;
+#include <assert.h>
 
 int getPow(int base, int exp) {
-    if (exp < 0)
+    if (exp < 0) {
         return -1;
+    }
     
     int result = 1;
     while(exp) {
-        if(exp & 1)
+        if(exp & 1) {
             result *= base;
+        }
         exp >>= 1;
         base *= base;
     }
@@ -33,27 +24,63 @@ int getPow(int base, int exp) {
     return result;
 }
 
-// calculates the length of the array
-void getLength(void) {
-    binNum = sizeof(bin) / 4 ;
-    binL = sizeof(bin) / 4;
+
+// you don't need a comment if the method is well named
+// also make it a real function:
+//     with input parameter - we need the actual binary array and the number of elements as you cannot calc that at runtime
+//     and a result as the functions return value
+int convertBinaryToDecimal(int input[], int numberOfInputElements) {
+
+    int result = 0;
+    
+    for (int i = 0; i < numberOfInputElements; i++) {
+        int exp = numberOfInputElements - i - 1;
+        result += input[i] * getPow(2, exp);
+    }
+        
+    return result;
 }
 
-// converts binary to decimal
-int binaryToNum(void) {
-    getLength();
+
+void test15() {
+    int binNum[] = {1, 1, 1, 1};
     
-    for (int i = 0; i < binL; i++) {
-        binNum--;
-        decNum += bin[i] * getPow(2, binNum);
-    }
+    int decNum = convertBinaryToDecimal(binNum, sizeof(binNum)/sizeof(binNum[0]));
+
+    assert(decNum == 15);
+}
+
+void test1() {
+    int binNum[] = {0, 0, 0, 1};
     
-    printf("%d\n", decNum);
+    int decNum = convertBinaryToDecimal(binNum, sizeof(binNum)/sizeof(binNum[0]));
+
+    assert(decNum == 1);
+}
+
+void test2() {
+    int binNum[] = {0, 0, 0, 0, 1, 0};
     
-    return decNum;
+    int decNum = convertBinaryToDecimal(binNum, sizeof(binNum)/sizeof(binNum[0]));
+
+    assert(decNum == 2);
+}
+
+void test3() {
+    int binNum[] = {1, 1};
+    
+    int decNum = convertBinaryToDecimal(binNum, sizeof(binNum)/sizeof(binNum[0]));
+
+    assert(decNum == 3);
 }
 
 int main() {
-    binaryToNum();
+    
+    test1();
+    test1();
+    test2();
+    test3();
+
     return 0;
 }
+
