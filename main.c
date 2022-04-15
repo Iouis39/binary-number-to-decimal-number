@@ -6,54 +6,60 @@
 
 #include <stdio.h>
 
-// define binary number
-int bin[4] = {1, 1, 1, 1};
-
-// counts current index in the array
-unsigned int binNum;
-
-// counts length of array
-unsigned int binL;
-
-// decimal number
-int decNum;
-
-int getPow(int base, int exp) {
-    if (exp < 0)
-        return -1;
-    
-    int result = 1;
-    while(exp) {
-        if(exp & 1)
-            result *= base;
-        exp >>= 1;
-        base *= base;
+int calcPower(int base, int exp) {
+    if(exp < 0) {
+      return -1;
     }
-    
+    int result = 1;
+    while (exp--) {
+      result *= base;
+    }
     return result;
 }
 
-// calculates the length of the array
-void getLength(void) {
-    binNum = sizeof(bin) / 4 ;
-    binL = sizeof(bin) / 4;
-}
-
-// converts binary to decimal
-int binaryToNum(void) {
-    getLength();
+int convertBinaryToDecimal(int input[], int numberOfInputElements, int* result) {
+    *result = 0;
     
-    for (int i = 0; i < binL; i++) {
-        binNum--;
-        decNum += bin[i] * getPow(2, binNum);
+    for (int i = 0; i < numberOfInputElements; i++) {
+        int exp = numberOfInputElements - i - 1;
+        *result += input[i] * calcPower(2, exp);
     }
     
-    printf("%d\n", decNum);
+    return 0;
+}
+
+void test1(void) {
+    int binNum[] = {1, 1, 1, 1};
+    int decNum;
     
-    return decNum;
+    convertBinaryToDecimal(binNum, sizeof(binNum)/sizeof(binNum[0]), &decNum);
+    
+    printf("%d\n", decNum);
+}
+
+void test2(void) {
+    int binNum[] = {0, 0, 0, 0, 1, 0};
+    int decNum;
+
+    convertBinaryToDecimal(binNum, sizeof(binNum)/sizeof(binNum[0]), &decNum);
+
+    printf("%d\n", decNum);
+}
+
+void test3(void) {
+    int binNum[] = {1, 1};
+    int decNum;
+
+    convertBinaryToDecimal(binNum, sizeof(binNum)/sizeof(binNum[0]), &decNum);
+
+    printf("%d\n", decNum);
 }
 
 int main() {
-    binaryToNum();
+    
+    test1();
+    test2();
+    test3();
+
     return 0;
 }
