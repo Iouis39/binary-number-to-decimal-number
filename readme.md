@@ -4,7 +4,7 @@ The general task was:
 
 * read a series of 0 and 1 from the console
 * print its decimal representation
-* repeast until `empty` string is given
+* repeat until `empty` string is given
 
 ## build
 
