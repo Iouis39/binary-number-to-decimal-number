@@ -6,6 +6,8 @@ The general task was:
 * print its decimal representation
 * repeat until `empty` string is given
 
+Tested on macOS only.
+
 ## build
 
 This project uses `build.sh` to build all binaries into ./build/.
@@ -28,3 +30,21 @@ This implements the general idea in C++ as simple as possible.
 ## optimized-convert.c
 
 This just shows how a string can be converted to decimal.
+
+## ui.c
+
+Uses https://github.com/Immediate-Mode-UI/Nuklear as an UI framework.
+
+Install glew glfw via brew:
+
+```
+brew install glew glfw
+```
+
+Build and run via:
+
+```
+export CFLAGS="-I/opt/homebrew/include/ -L/opt/homebrew/lib/"
+make
+./build/ui
+```
